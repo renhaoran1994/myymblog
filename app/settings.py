@@ -5,7 +5,7 @@ author : Ger-Rr
 import logging
 import os
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-database_uri = 'mysql+pymysql://root:renhaoranrhr94@localhost:3306/ginger?charset=utf8'
+database_uri = 'mysql+pymysql://root:renhaoranrhr94@localhost:3306/ginger94?charset=utf8'
 
 class BaseConfig:
     SECRET_KEY = os.getenv('SECRET_KEY', 'u54ar@nj%jfgjkemnm4r&5***53hjff')
