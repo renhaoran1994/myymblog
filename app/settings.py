@@ -49,6 +49,7 @@ class DevelopmentConfig(BaseConfig):
 class ProductionConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', database_uri)
     LOG_LEVEL = logging.WARNING
+    DEBUG = False
 
 config={
     'development':DevelopmentConfig,

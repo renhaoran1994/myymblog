@@ -8,6 +8,10 @@ from app.extensions import db
 from flask_script import Manager
 from flask_migrate import Migrate,MigrateCommand
 
+dotenv_path = os.path.join(os.path.dirname(__file__),'.env')
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
+
 app = create_app("development")
 manager = Manager(app)
 Migrate(app,db)
