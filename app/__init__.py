@@ -19,7 +19,6 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     register_plugin(app)
     register_template_context(app)
-    register_commands(app)
     register_errors(app)
     return app
 
@@ -58,50 +57,8 @@ def register_plugin(app):
     login_manager.init_app(app)
     csrf.init_app(app)
 
-def register_logging(app):
-    pass
-
-def register_extensions(app):
-    pass
-
-def register_commands(app):
-    @app.cli.command()
-    @click.option('--username', prompt=True, help='The username used to login.')
-    @click.option('--password', prompt=True, hide_input=True,
-                  confirmation_prompt=True, help='The password used to login.')
-    def init(username, password):
-        click.echo('Initializing the database...')
-        db.create_all()
-
-        admin = Admin.query.first()
-        if admin:  # 如果数据库中已经有管理员记录就更新用户名和密码
-            click.echo('The administrator already exists, updating...')
-            admin.username = username
-            admin.set_password(password)
-        else:  # 否则创建新的管理员记录
-            click.echo('Creating the temporary administrator account...')
-            admin = Admin(
-                username=username,
-                blog_title='Bluelog',
-                blog_sub_title="No, I'm the real thing.",
-                name='Admin',
-                about='Anything about you.'
-            )
-            admin.set_password(password)
-            db.session.add(admin)
-
-        category = Category.query.first()
-        if category is None:
-            click.echo('Creating the default category...')
-            category = Category(name='Default')
-            db.session.add(category)
-
-        db.session.commit()
-        click.echo('Done.')
-
 
 def register_errors(app):
-
     @app.errorhandler(400)
     def bad_request(e):
         current_app.logger.error(e)
@@ -121,8 +78,6 @@ def register_errors(app):
     def handle_csrf_error(e):
         current_app.logger.error(e)
         return render_template('errors/400.html', description=e.description), 400
-
-
 
 
 def register_shell_context(app):
