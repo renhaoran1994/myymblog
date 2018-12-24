@@ -18,8 +18,8 @@ manager = Manager(app)
 Migrate(app,db)
 manager.add_command('db',MigrateCommand)
 
-@manager.option('-u','username',dest='username')
-@manager.option('-p','password',dest='password')
+@manager.option('-u','-username',dest='username')
+@manager.option('-p','-password',dest='password')
 def create_user(username,password):
     if not all([username,password]):
         print('参数不足')
