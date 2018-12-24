@@ -14,7 +14,7 @@ from logging.handlers import RotatingFileHandler
 
 def create_app(config_name):
     app = Flask(__name__)
-    setup_log(config_name)
+    setup_log(config_name,app)
     register_bp(app)
     app.config.from_object(config[config_name])
     register_plugin(app)
